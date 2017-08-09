@@ -1,4 +1,2 @@
 # ML_python
-Machine Learning practice in python
-
-**ICS student at UH, learning Machine Learning
+Machine Learning exercise from Coursera Machine_Learning course, in python.
