@@ -9,3 +9,6 @@ function.py includes all functions needed for the NN, such as activation, and co
 ac.py is a script to evaluate the trained neural network. It compares the predicted output
 and the 'correct answers' from the test dataset, and calculates the accuracy and 
 return the value.
+
+
+Data file is not uploaded, due to file size limit of github. 
