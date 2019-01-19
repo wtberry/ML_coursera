@@ -14,3 +14,5 @@ Practice project for multi-variable linear regression, written by NumPy from scr
 Refer to README.md within the folder
 
 ## Neural_Network/fashionMNIST
+Fully connected neural network, written from scratch. FashionMNIST data was used,
+refer to README.md in the folder for details
