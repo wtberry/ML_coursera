@@ -28,7 +28,7 @@ print('y:\n', y, '\n', y.shape)
 
 # We load some pre-installed neural network parameters
 
-print('loading saved NNPs')
+print('loading saved Neural Network parameters')
 
 # load the weights into variables Theta1 and Theta2
 
