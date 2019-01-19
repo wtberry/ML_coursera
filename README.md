@@ -1,5 +1,6 @@
 # ML_python
-Machine Learning exercise from Coursera Machine_Learning course, in python.
+Machine Learning exercise from Coursera Machine_Learning course by Andrew Ng.
+This course's assignment used to use matlab, but this is done in python.
 
 ## ex3
 This program load MNIST dataset and pre-trained Neural Network parameters from .mat file, and make prediction and plot each images.
