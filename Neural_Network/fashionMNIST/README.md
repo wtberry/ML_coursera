@@ -7,10 +7,10 @@
 * Matplotlib: visualization
 * Time: measures training time
 
-fashionMNIST dataset was used.
+[fashionMNIST](https://github.com/zalandoresearch/fashion-mnist) dataset, fashion version of MNIST with images from Zalando, was used.
 
-It imports and uses three python files, fashion_data_import.py, ac.py, and functions.py.
 
+## What does *.py scripts does...
 - fashion_data_import.py: imports the datasets from data/ folder, and preprocess it into 
 numpy array, and return them.
 
@@ -22,3 +22,11 @@ return the value.
 
 
 - Data file is not uploaded, due to file size limit of github. 
+
+## What about *.ipynb?
+They go over basic concepts of neural network, for my own record / memory keeping.
+- Bokeh Sample.ipynb
+- Cost Function.ipynb
+- Neural Network - FashionMNIST dataset.ipynb
+- Random Ititialization & Matrix Folding.ipynb
+- Sigmoid Function
