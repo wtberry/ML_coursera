@@ -88,6 +88,9 @@ def CostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X, 
 
     grad = np.concatenate((theta1_grad.reshape(theta1_grad.size, order='F'), theta2_grad.reshape(theta2_grad.size, order='F')))
 
+    # records cost as history
+    j_hist.append(J)
+
     return [J, grad]
 
 def predict(theta1, theta2, X):

@@ -141,7 +141,7 @@ r_nn_params = np.concatenate((r_theta1.reshape(r_theta1.size, order='F'), r_thet
 
 
 mymethod = 'L-BFGS-B' # specifying the optimization algorithm
-maxiter = 100
+maxiter = 10
 lam =0.9 
 j_hist = [] # recording history of cost over the training
 print('training NN by ', mymethod, '.....')
@@ -196,11 +196,12 @@ plt.show()
 '''
 
 
+'''
 for pic in range(mt): # keep printing out the graph, and prediction until user press ctrl-C
     sample = np.random.choice(Xt.shape[0]) # choosing random index num for X
     pixel = Xt[sample, 1:].reshape(-1, int(np.sqrt(n))) # reshaping the one sample into (28x28)
     y_val = yt[sample, 0] # y label value
-    pt_val = pt[sample, 0] # testing dataset prediction label value
+    pt_val = prediction_test[sample, 0] # testing dataset prediction label value
     lab_answer = 'correct label: ' + str(y_val)
     lab_prediction = 'predicted label: ' + str(pt_val)
     plt.imshow(pixel, cmap='Greys')
@@ -208,6 +209,7 @@ for pic in range(mt): # keep printing out the graph, and prediction until user p
     plt.xlabel(lab_answer + ' ' +  str(human_label[y_val]))
     plt.ylabel(lab_prediction + ' ' +  str(human_label[pt_val]))
     plt.axis('on')
-    print('predicted label: ', pt[sample, 0])
+    print('predicted label: ', prediction_test[sample, 0])
     print('correct label: ', y_val)
     plt.show()
+'''
