@@ -11,4 +11,4 @@
 
 
 #### Details of the projects, and each files are in [README_jupyterNotebook.ipynb](README_jupyterNotebook.ipynb)
-#### Project itself is available at [Neural Network from Scratch.ipynb](Neural Network from Scratch.ipynb)
+#### Project itself is available at [Neural Network from Scratch.ipynb](Neural Network From Scratch.ipynb)
