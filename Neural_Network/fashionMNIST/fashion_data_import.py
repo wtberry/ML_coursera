@@ -19,10 +19,10 @@ def data_in(file_in):
     print(printing)
 
     if file_in == 'train':
-        data = pd.read_csv(PATH + "/mnist_train.csv")
+        data = pd.read_csv(PATH + "/fashion-mnist_train.csv")
 
     elif file_in == 'test':
-        data = pd.read_csv(PATH + "/mnist_test.csv")
+        data = pd.read_csv(PATH + "/fashion-mnist_test.csv")
 
 
     ## converting the dataframe into np array (matrix?)

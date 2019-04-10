@@ -10,4 +10,5 @@
 [fashionMNIST](https://github.com/zalandoresearch/fashion-mnist) dataset, fashion version of MNIST with images from Zalando, was used.
 
 
-**Details of the projects, and each files are in README_jupyterNotebook.ipynb**
+#### Details of the projects, and each files are in README_jupyterNotebook.ipynb
+#### Project itself is available at Neural Network from Scratch.ipynb
