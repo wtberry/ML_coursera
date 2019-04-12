@@ -1,19 +1,20 @@
 '''
-Neural Network class for other script
+Neural Network class, with 1 hidden layer
 '''
 from scipy import special as sp
 import numpy as np
 
 class Neural_Network(object):
-    def __init__(self, input_layer_size, output_layer_size, hidden_layer_size):
+    def __init__(self, input_layer_size, output_layer_size, hidden_layer_size, eps):
         # architectures
         self.input_layer_size = input_layer_size
         self.output_layer_size = output_layer_size
         self.hidden_layer_size = hidden_layer_size
+        self.eps = eps
 
         # Weights initialization
-        self.W1 = np.random.random((self.hidden_layer_size, self.input_layer_size+1))
-        self.W2 = np.random.random((self.output_layer_size, self.hidden_layer_size+1))
+        self.W1 = np.random.random((self.hidden_layer_size, self.input_layer_size+1))*2*self.eps-self.eps
+        self.W2 = np.random.random((self.output_layer_size, self.hidden_layer_size+1))*2*self.eps-self.eps
 
     def forward(self, X):
         # forward propagation

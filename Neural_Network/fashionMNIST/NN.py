@@ -1,11 +1,11 @@
 ### Neural Network exercise using fashion MNIST dataset ###
 
 # based on Coursera's Machine Learning course, exercise 4, Neural Network
-# 
+# Using NeuralNetwork.py, Neural_Network class, and trainer class 
 
 #### NOTE ###
 '''
-This script runs optimization algorithm on FULL dataset, not like batch / stochastic 
+This script runs optimization algorithm on FULL dataset, not batch / stochastic 
 gradient descent. As a result it'll take sinificant amout of time to finish training. 
 It took 30 minutes 30 seconds to train 100 iteration, on a Laptop with dual core 7th gen i7. 
 '''
@@ -39,7 +39,6 @@ print('y: \n', y)
 ### Loading the testing dataset
 Xt, yt = fin.data_in('test')
 mt, nt = Xt.shape
-#Xt = np.c_[np.ones((mt, 1)), Xt] ## adding bias term to Xt
 
 ### setting up parameters for Neural Network ###
 # 3 Layers total, input, 1 hidden and output layer.
@@ -68,68 +67,12 @@ for pic in range(num_of_image): # num_of_image amount of images displayed
 # Adding bias terms to X, training dataset 
 #X = np.c_[np.ones((m, 1)), X] ## adding bias term to X
 #print('X with bias: \n', X)
-'''
-##### Initializing Neural Network Parameters ########################
-
-# epsilon for initial theta
-eps = 0.5
-print('initializing Neural Network Parameters.....')
-i_theta1 = np.random.random((hidden_layer_size, n+1))*2*eps-eps
-i_theta2 = np.random.random((num_labels, hidden_layer_size+1))*2*eps-eps
-print('initial theta1: \n', i_theta1)
-
-# here, theta matrices are folded into one long vector?? to feed into optimization algorithm
-nn_params = np.concatenate((i_theta1.reshape(i_theta1.size, order='F'), i_theta2.    reshape(i_theta2.size, order='F')))
-##### Compute Cost (Feedforward) #########################
-print('Feedforward Using Neural Network ....')
-
-# weight regularization parameter 
-# adjust this to prevent overfitting. 
-lam = 0
-
-print('making sure the algorithm implementation is correct...')
-print()
-
-########## algorithm checking with coursera dataset #########
-
-# trial feedforward
-cost, grad = fun.CostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X, y, lam)
-print('lambda with 0')
-print('cost at parameters (from ex4weights), should be about 0.287629')
-print('cost: \n', cost)
-
-lam = 1
-print('checking cost function with regularization...')
-cost1, grad = fun.CostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X, y, lam)
-print('lambda with 1')
-print('cost at parameters (from ex4weights), should be about 0.383770')
-print('cost: \n', cost1)
-
-##### sigmoid gradient #######################
-print('Evaluating sigmoid gradient....\n')
-
-g = fun.sigmoidGradient(np.array((-1, -0.5, 0, 0.5, 1)))
-print('Sigmoid gradient evaluated at [-1, -0.5, 0, 0.5, 1]: \n', g)
-
-## imshow colormap https://matplotlib.org/examples/color/colormaps_reference.html
-
-##### Implementing regularization ##############
-# assuming that the BackPropagation is right...
-print('checking BackPropagation with regularization...')
-lam = 3
-debug_J, grad = fun.CostFunction(nn_params, input_layer_size, hidden_layer_size, num_labels, X, y, lam)
-
-print('cost at debugging parameters with lambda: ', lam)
-print('Cost: ', debug_J)
-print('This value should be about: 0.576051')
-'''
-
-''' Code begin from here again!!!'''
 
 ##### Initializing Parameters #################
 #eps = 0.5
 print('initializing Neural Network .....')
-Net = Neural_Network(input_layer_size, output_layer_size, hidden_layer_size)
+eps = 0.5
+Net = Neural_Network(input_layer_size, output_layer_size, hidden_layer_size, eps)
 
 ## initializing random values of theta here
 #r_theta1 = np.random.random((hidden_layer_size, n+1))*2*eps-eps
@@ -145,30 +88,17 @@ print('initial theta1: \n', Net.W1)
 ### Use python optimizing function
 print("initializing trainer....")
 mymethod = 'L-BFGS-B' # specifying the optimization algorithm
-maxiter = 10
+maxiter = 30
 lam =0.9 
 print('training NN by ', mymethod, '.....')
 t = trainer(Net)
 
 print('Starting training timer....')
 start_time = time.time() # setting stopwatch for training
-t.train(X, y, lam, maxiter, mymethod, label_one_hot=True)
+t.train(X, y, lam, maxiter, mymethod)
 ## arguments for the optimization algorithm
 ### Printing out parameters ###
 elapsed_time = time.time() - start_time
-'''
-nn_params = results['x']
-
-
-####### Making Prediction based on learned theta values #################
-
-# flattening the theta matrics
-theta1 = np.reshape(nn_params[:hidden_layer_size * (input_layer_size + 1)], \
-                         (hidden_layer_size, input_layer_size + 1), order='F')
-theta2 = np.reshape(nn_params[hidden_layer_size * (input_layer_size + 1):], \
-                         (num_labels, hidden_layer_size + 1), order='F')
-
-'''
 
 ### Training set Prediction ###
 accuracy = ac.accuracy(Net.predict(X), y)
@@ -188,32 +118,13 @@ print('Lambda: ', lam)
 print('# of iteration: ', maxiter)
 print('Optimization Algorithm: ', mymethod)
 
-'''
-NOt working, so commented out 
 ##### plotting cost function graph ########
 plt.figure()
-plt.plot(np.arange(1, J_hist.size+1), J_hist, 'b')
+plt.plot(np.arange(1, len(t.J)+1), t.J, 'b', label='cost')
+plt.plot(np.arange(1, len(t.acc)+1), t.acc, 'r', label='accuracy')
+plt.legend()
 plt.xlabel('# of iterations')
-plt.ylabel('Cost J')
+plt.ylabel('Cost & Accuracy')
 plt.grid(True)
 plt.show()
-'''
 
-
-'''
-for pic in range(mt): # keep printing out the graph, and prediction until user press ctrl-C
-    sample = np.random.choice(Xt.shape[0]) # choosing random index num for X
-    pixel = Xt[sample, 1:].reshape(-1, int(np.sqrt(n))) # reshaping the one sample into (28x28)
-    y_val = yt[sample, 0] # y label value
-    pt_val = prediction_test[sample, 0] # testing dataset prediction label value
-    lab_answer = 'correct label: ' + str(y_val)
-    lab_prediction = 'predicted label: ' + str(pt_val)
-    plt.imshow(pixel, cmap='Greys')
-
-    plt.xlabel(lab_answer + ' ' +  str(human_label[y_val]))
-    plt.ylabel(lab_prediction + ' ' +  str(human_label[pt_val]))
-    plt.axis('on')
-    print('predicted label: ', prediction_test[sample, 0])
-    print('correct label: ', y_val)
-    plt.show()
-'''
