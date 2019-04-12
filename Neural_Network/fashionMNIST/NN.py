@@ -145,7 +145,7 @@ print('initial theta1: \n', Net.W1)
 ### Use python optimizing function
 print("initializing trainer....")
 mymethod = 'L-BFGS-B' # specifying the optimization algorithm
-maxiter = 30
+maxiter = 10
 lam =0.9 
 print('training NN by ', mymethod, '.....')
 t = trainer(Net)

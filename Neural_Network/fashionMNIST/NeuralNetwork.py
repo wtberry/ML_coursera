@@ -18,13 +18,14 @@ class Neural_Network(object):
     def forward(self, X):
         # forward propagation
         # first add bias term to X
-        self.m = X.shape[0]
-        self.z2 = X.dot(self.W1.T) #(m x hidden layer size)
+        self.X = self.bias(X)
+        self.m = self.X.shape[0]
+        self.z2 = self.X.dot(self.W1.T) #(m x hidden layer size)
         self.a2 = self.sigmoid(self.z2)
-        self.a2 = np.c_[np.ones((self.m, 1)), self.a2]
+        self.a2 = self.bias(self.a2)
         self.z3 = self.a2.dot(self.W2.T) #(m x outputlayer)
-        self.a3 = self.sigmoid(self.z3)
-        return self.a3
+        a3 = self.sigmoid(self.z3)
+        return a3
 
 
     def sigmoid(self, z):
@@ -58,12 +59,13 @@ class Neural_Network(object):
         D1 = np.zeros((self.hidden_layer_size+1, self.input_layer_size+1))
 
         y_hat = self.forward(X)
+        self.X = self.bias(X)
 
         d3 = y_hat-Y #(6000x10)
         d2 = d3.dot(self.W2)*self.a2*(1-self.a2) 
 
         D2 += d3.T.dot(self.a2) #(10x51)
-        D1 += d2.T.dot(X) #(51x785)
+        D1 += d2.T.dot(self.X) #(51x785)
     
         theta1_grad[:, 1:] = (1/self.m)*D1[1:,1:] + (self.lam/self.m)*self.W1[:,1:] #(50x784)
         theta1_grad[:, 0] = (1/self.m)*D1[1:,0]  #(50x1)
@@ -78,6 +80,7 @@ class Neural_Network(object):
 
     def getFlatWeights(self):
         # return flattened weights for scipy optimizer
+        print("W1 get: ", self.W1[100, 100])
         return np.concatenate((self.W1.reshape(self.W1.size, order='F'), self.W2.reshape(self.W2.size, order='F')))
     
     def setWeights(self, params):
@@ -91,7 +94,7 @@ class Neural_Network(object):
         return (prediction.argmax(axis=1)).reshape(-1, 1) ##MNIST
 
     def predict(self, X):
-        return self.getLabel(self.forward(self.bias(X)))
+        return self.getLabel(self.forward(X))
     
     def bias(self, X):
         return np.c_[np.ones((X.shape[0], 1)), X]
