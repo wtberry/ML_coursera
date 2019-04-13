@@ -81,7 +81,6 @@ class Neural_Network(object):
 
     def getFlatWeights(self):
         # return flattened weights for scipy optimizer
-        print("W1 get: ", self.W1[100, 100])
         return np.concatenate((self.W1.reshape(self.W1.size, order='F'), self.W2.reshape(self.W2.size, order='F')))
     
     def setWeights(self, params):
