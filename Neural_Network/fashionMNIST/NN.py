@@ -18,18 +18,19 @@ import time # to record time took to train
 #import ac # calculates accuracy  of the model after training
 import fashion_data_import as fin # data importing script
 import visualizer as v
+from fashion_data_import import data
 from NeuralNetwork import Neural_Network
 from trainer import trainer
 
 ### first, import fashion MNIST dataset
-
+img_data = data('fashion')
 ### training set
-X, y = fin.data_in('train')
+X, y = img_data.getData('train')
 m, n = X.shape #(6000, 784), m for number of training examples, n for number of features
 print('X: {}\ny: {}'.format(X, y))
 
 ### test set
-Xt, yt = fin.data_in('test')
+Xt, yt = img_data.getData('test')
 mt, nt = Xt.shape
 
 ### setting cloths name labels for # labels for human interpretation

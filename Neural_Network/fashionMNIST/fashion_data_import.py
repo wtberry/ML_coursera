@@ -8,28 +8,39 @@ Enter argument as either fashion_mnist_test.csv or fashion_mnist_train.csv
 import numpy as np
 import pandas as pd
 
-def data_in(file_in):
+class data(object):
     '''
-    arg as either 'train' or 'test'
-    AS STRING
-    and return X, y in this order
+    Object represent the training and testing data
+    - read in the csv file
+    - convert them into np.array
+    - maybe preprocessing in the future??
     '''
-    PATH = 'data' 
-    printing = 'Importing ' + file_in + 'ing dataset as pandas dataframe...'
-    print(printing)
+    def __init__(self, mode='mnist'):
+        '''
+        mode: str, fashionMNIST or regular MNIST, defaults to fashion
+        '''
+        self.PATH = 'data'
+        self.X, self.y = None, None
+        self.Xt, self.yt = None, None
 
-    if file_in == 'train':
-        data = pd.read_csv(PATH + "/fashion-mnist_train.csv")
+        print("Importing {} dataset as pandas dataframe...".format(mode))
+        if mode.lower() == 'fashion':
+            train = pd.read_csv(self.PATH + "/fashion-mnist_train.csv")
+            test = pd.read_csv(self.PATH + "/fashion-mnist_test.csv")
+        elif mode.lower() == 'mnist':
+            train = pd.read_csv(self.PATH + "/mnist_train.csv")
+            test = pd.read_csv(self.PATH + "/mnist_test.csv")
 
-    elif file_in == 'test':
-        data = pd.read_csv(PATH + "/fashion-mnist_test.csv")
+        ## now convert into numpy arr
+        train_arr = train.values
+        test_arr = test.values
 
+        self.X = train_arr[:, 1:]
+        self.y = train_arr[:, 0].reshape(-1, 1)
 
-    ## converting the dataframe into np array (matrix?)
-    data_array = data.values
-    m = data_array.shape[0]
-    ## assigning X and y for data and label
-    X = data_array[:, 1:]
-    y = data_array[:, 0].reshape(m, 1)
-
-    return X, y
+        self.Xt = test_arr[:, 1:]
+        self.yt = test_arr[:, 0].reshape(-1, 1)
+    
+    def getData(self, which='train'):
+        if which.lower()=='train': return self.X, self.y  
+        elif which.lower()=='test': return self.Xt, self.yt
