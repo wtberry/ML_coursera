@@ -5,11 +5,15 @@ from scipy import optimize
 import numpy as np
 
 class trainer(object):
-    def __init__(self, N):
+    def __init__(self, N, X, y):
         # set up model
         self.N = N
         self.J = [] # empty list for cost
         self.acc = [] # training accuracy
+
+        # set up data
+        self.X = X
+        self.y = y
 
     def callback(self, params):
         # update weights and accumulate cost record
@@ -20,7 +24,6 @@ class trainer(object):
     def costFunctionWrapper(self, params, X, y, lam):
         # function to pass into scipy optimizer.
         # compute cost, gradients and return it
-        print("weight: ", params[1000])
         self.N.setWeights(params)
         cost = self.N.costFunction(X, y, lam)
         grad = self.N.costGradient(X, y)
@@ -38,7 +41,7 @@ class trainer(object):
         accuracy = comp_o_zero.mean()*100
         return accuracy
 
-    def train(self, X, y, lam, maxiter, mymethod, label_one_hot=True):
+    def train(self, lam, maxiter, mymethod, label_one_hot=True):
         '''
         train the model with provided data and parameters
         Params:
@@ -48,14 +51,10 @@ class trainer(object):
         - label_one_hot: weather one hot y label or not: bool
         '''
 
-        # set up data
-        self.X = X
 
         if label_one_hot:
-            self.label = y
-            self.y = self.one_hot(y)
-        else:
-            self.y = y
+            self.label = self.y
+            self.y = self.one_hot(self.y)
         self.lam = lam
         
         params0 = self.N.getFlatWeights()
