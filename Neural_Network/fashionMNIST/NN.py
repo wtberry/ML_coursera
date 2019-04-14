@@ -83,7 +83,8 @@ elapsed_time = time.time() - start_time
 
 ### measuring accuracy ###
 accuracy = t.accuracy(Net.predict(X), y)
-accuracy_test = t.accuracy(Net.predict(Xt), yt)
+ptest = Net.predict(Xt)
+accuracy_test = t.accuracy(ptest, yt)
 
 
 ### Testing set Prediction ###
@@ -99,9 +100,11 @@ print('Lambda: ', lam)
 print('# of iteration: ', maxiter)
 print('Optimization Algorithm: ', mymethod)
 
-##### plotting cost function graph ########
+##### plotting cost & accuracy history, and confusion matrix ########
 ## methodanize?
 v.cost_acc(t.J, t.acc)
+v.confusion_mat(yt, ptest)
+
 '''
 plt.figure()
 plt.plot(np.arange(1, len(t.J)+1), t.J, 'b', label='cost')

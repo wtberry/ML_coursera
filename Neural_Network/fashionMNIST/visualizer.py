@@ -4,7 +4,7 @@ methods for visualizing data, such as
 - training / testing set images
 - confusion matrix
 '''
-#from sklearn.con
+from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -62,3 +62,28 @@ def cost_acc(cost, acc):
     plt.grid(True)
     plt.show()
 
+def consufion_mat(label, predicted_label, human_label):
+    '''
+    plot confusion matrix, based on given prediction and label
+    '''
+    cm = confusion_matrix(label, predicted_label)
+    axis_font = {'size':13, 'color':'black'} # font dictionary for axis
+    data_font = {'size':10, 'color':'white', 'weight':'heavy'}
+    classNames = {human_label[i] for i in range(10)} # list of label names
+    tick_marks = np.arange(len(classNames))
+
+    fig = plt.figure(figsize=(10, 8))
+    plt.imshow(cm, interpolation='nearest')
+    plt.colorbar()
+    plt.title("Confusion Matrix", fontdict=axis_font)
+    plt.xlabel("Predicted Label", fontdict=axis_font)
+    plt.ylabel("True Label", fontdict=axis_font)
+    plt.xticks(tick_marks, classNames, rotation=45)
+    plt.yticks(tick_marks, classNames)
+    
+    for i in range(10):
+        for j in range(10):
+            plt.text(j, i, str(cm[i, j]), fontdict=data_font, \
+                horizontalalignment='center',verticalalignment='center')
+
+    plt.show()
