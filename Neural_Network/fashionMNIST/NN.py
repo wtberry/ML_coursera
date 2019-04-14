@@ -103,7 +103,7 @@ print('Optimization Algorithm: ', mymethod)
 ##### plotting cost & accuracy history, and confusion matrix ########
 ## methodanize?
 v.cost_acc(t.J, t.acc)
-v.confusion_mat(yt, ptest)
+v.confused(yt, ptest, human_label)
 
 '''
 plt.figure()

@@ -62,7 +62,7 @@ def cost_acc(cost, acc):
     plt.grid(True)
     plt.show()
 
-def consufion_mat(label, predicted_label, human_label):
+def confused(label, predicted_label, human_label):
     '''
     plot confusion matrix, based on given prediction and label
     '''
